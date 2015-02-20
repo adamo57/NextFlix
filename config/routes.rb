@@ -5,15 +5,19 @@ Rails.application.routes.draw do
 
   get 'about'     => 'static_pages#about'
 
-  get 'isiton'    => 'static_pages#isiton'
-
   get 'recommend' => 'static_pages#recommend'
 
   get'randomMovie'=> 'static_pages#randomMovie'
 
   get 'signup'  => 'users#new'
 
+  get 'movies/new'
+  get 'isiton'    => 'movies#new'  
+
+  get 'movies/show'
+
   resources :users
+  resources :movies
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  rating: MyString
+  release_year: MyString
+  genre: MyString
+  netflix_id: 
+
+two:
+  title: MyString
+  rating: MyString
+  release_year: MyString
+  genre: MyString
+  netflix_id: 

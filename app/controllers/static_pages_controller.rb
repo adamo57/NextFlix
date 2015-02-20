@@ -5,9 +5,6 @@ class StaticPagesController < ApplicationController
   def about
   end
 
-  def isiton
-  end
-
   def recommend
   end
 
