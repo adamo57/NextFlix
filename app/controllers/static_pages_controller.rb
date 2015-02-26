@@ -4,10 +4,4 @@ class StaticPagesController < ApplicationController
 
   def about
   end
-
-  def recommend
-  end
-
-  def randomMovie
-  end
 end

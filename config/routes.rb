@@ -5,9 +5,9 @@ Rails.application.routes.draw do
 
   get 'about'     => 'static_pages#about'
 
-  get 'recommend' => 'static_pages#recommend'
+  get 'recommend' => 'movies#recommend'
 
-  get'randomMovie'=> 'static_pages#randomMovie'
+  get'randomMovie'=> 'movies#randomMovie'
 
   get 'signup'  => 'users#new'
 
