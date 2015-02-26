@@ -8,6 +8,8 @@
     <br/>
     <br/>
      <%= form_for(@movie) do |f| %>
+            <%= render 'shared/movie_error_messages' %>
+
             <%= f.label :title %>
             <%= f.text_field :title, class: 'form-control' %>
              
