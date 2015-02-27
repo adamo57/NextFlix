@@ -1,6 +1,5 @@
 <% provide(:title, 'Movie') %>
 
-
 <div class="container">
   <h2> <%= @movie.title %> </h2>
   <h2> <%= @movie.rating %> </h2>
@@ -12,4 +11,83 @@
   <br/>
   <br/>
   <h2> <%= @movie.attributes %> </h2>
+
+<table id="eeTable" class="display" cellspacing="0" width="100%">
+<thead>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+  </tr>
+</thead>
+
+<tbody>
+</tbody>      
+</table>
 </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <button id="load" class="btn btn-info">Get Data</button>
+    <button id="clear" class="btn btn-info">Clear Data</button>
+  </div>      
+</div>
+
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script> 
+
+    <!-- datatables --> 
+    <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script> 
+    
+    <!-- custom local javascript -->
+    <script>
+      var loadCount = 0;
+      var xmlhttp = new XMLHttpRequest();
+      var url = "";
+      var base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq";
+      var search_url = "/search/movie/title/"; //add title name to end
+      var source_url = "/movie/"; //add id to end
+
+      url = base_url + search_url + "Birdman";
+
+      $(document).ready(function() 
+      {
+          $('#eeTable').dataTable( {
+            "searching": false,
+              "paging":   false,
+              "ordering": true,
+              "info":     false
+          } );
+      } );
+
+      xmlhttp.onreadystatechange=function() 
+      {       
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+          {           
+              loadData(xmlhttp.responseText);
+          }
+      }
+
+      function loadData(response) 
+      {
+          //set url for JSON query
+          var obj = JSON.parse(response);
+          var id = obj.results[0].id;
+          var title = obj.results[0].title;
+        $('#eeTable').DataTable().row.add( [id, title] ).draw();
+      }
+
+      $('#load').click(function () 
+      {      
+        //url = base_url + search_url + <% @title %>; 
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();       
+      });
+
+      $('#clear').click(function () 
+      {
+        $('#eeTable').DataTable().clear().draw();
+      });
+
+    </script>
