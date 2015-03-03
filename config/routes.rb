@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   get 'movies/show'
 
+  post 'randoMovie'  => 'movies#randoMovie'
+
   resources :users
   resources :movies
 

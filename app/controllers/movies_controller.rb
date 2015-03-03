@@ -23,6 +23,11 @@ class MoviesController < ApplicationController
 	def show
 		@movie = Movie.find(params[:id])
 	end
+
+	def randoMovie
+		@movie = Movie.find(Movie.order("random()").first(5))
+		render 'show'
+	end
 	
 	private
 
