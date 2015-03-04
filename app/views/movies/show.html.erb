@@ -1,16 +1,17 @@
 <% provide(:title, 'Movie') %>
 
 <div class="container">
+  <br/>
+  <br/>
+  <br/>
+  <br/>
   <h2> <%= @movie.title %> </h2>
-  <h2> <%= @movie.rating %> </h2>
-  <h2> <%= @movie.release_year %> </h2>
-  <h2> <%= @movie.genre %> </h2>
-  <h2> <%= @movie.netflix_id %> </h2>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <h2> <%= @movie.attributes %> </h2>
+  <h3> <%= @movie.genre %> </h3>
+  <h3> Rating: <%= @movie.rating %> </h3>
+  <h3> Released in <%= @movie.release_year %> </h3>
+  <h4> <%= @movie.netflix_id %> </h4>
+
+  <h2> <!--<%= @movie.attributes %> --> </h2>
 
 <table id="eeTable" class="display" cellspacing="0" width="100%">
 <thead>
@@ -43,8 +44,6 @@
     <!-- custom local javascript -->
     <script>
       var id;
-      var xmlhttp = new XMLHttpRequest();
-      var xmlhttp2 = new XMLHttpRequest(); 
       var url = "";
       var base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq";
       var search_url = "/search/movie/title/"; //add title name to end
@@ -100,8 +99,6 @@
             $.getJSON( url)
               .done(function( json ) {
                 id = json.results[0].id;
-                var title = json.results[0].title;
-                $('#eeTable').DataTable().row.add( [id, title] ).draw();
                 ajaxQueue(1);
               })            
             break;
