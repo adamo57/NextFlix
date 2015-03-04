@@ -22,6 +22,7 @@ class MoviesController < ApplicationController
 
 	def show
 		@movie = Movie.find(params[:id])
+		gon.title = @movie.title
 	end
 
 	private

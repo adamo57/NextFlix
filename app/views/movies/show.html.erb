@@ -15,8 +15,8 @@
 <table id="eeTable" class="display" cellspacing="0" width="100%">
 <thead>
   <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
+    <th>Source Type</th>
+    <th>Source Name</th>
   </tr>
 </thead>
 
@@ -42,14 +42,13 @@
     
     <!-- custom local javascript -->
     <script>
-      var loadCount = 0;
+      var id;
       var xmlhttp = new XMLHttpRequest();
+      var xmlhttp2 = new XMLHttpRequest(); 
       var url = "";
       var base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq";
       var search_url = "/search/movie/title/"; //add title name to end
       var source_url = "/movie/"; //add id to end
-
-      url = base_url + search_url + "Birdman";
 
       $(document).ready(function() 
       {
@@ -61,28 +60,39 @@
           } );
       } );
 
-      xmlhttp.onreadystatechange=function() 
-      {       
-          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-          {           
-              loadData(xmlhttp.responseText);
-          }
-      }
+      function ajaxQueue(step){
+        switch(step){
+          case 1:
+            url = base_url + source_url + id;
+            alert(url);
+            $.getJSON( url)
+              .done(function( json ){
+                alert(json);
+                sources = json.purchase_web_sources;
+                for(var i = 0; i < sources.length; i++){
+                  $('#eeTable').DataTable().row.add( ["Paid", sources[i].display_name] ).draw();
+                }
+              })
+          break;
 
-      function loadData(response) 
-      {
-          //set url for JSON query
-          var obj = JSON.parse(response);
-          var id = obj.results[0].id;
-          var title = obj.results[0].title;
-        $('#eeTable').DataTable().row.add( [id, title] ).draw();
+          case 0:
+            url = base_url + search_url + gon.title; 
+            $.getJSON( url)
+              .done(function( json ) {
+                id = json.results[0].id;
+                var title = json.results[0].title;
+                $('#eeTable').DataTable().row.add( [id, title] ).draw();
+                ajaxQueue(1);
+              })            
+            break;
+        }
       }
 
       $('#load').click(function () 
-      {      
-        //url = base_url + search_url + <% @title %>; 
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();       
+      {  
+           
+        ajaxQueue(0);       
+             
       });
 
       $('#clear').click(function () 
