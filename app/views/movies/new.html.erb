@@ -3,6 +3,21 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
+<<<<<<< HEAD
+=======
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+     <%= form_for(@movie) do |f| %>
+            <%= render 'shared/movie_error_messages' %>
+
+            <%= f.label :title %>
+            <%= f.text_field :title, class: 'form-control' %>
+             
+             <%= f.submit "Is is on?", class: "btn btn-primary" %>
+     <% end %>
+>>>>>>> 4f68db8f399fc3630a7db3eead90e944cf11f929
     </div>
    </div>
   <div class="push"></div>

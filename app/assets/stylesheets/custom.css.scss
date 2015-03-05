@@ -1,9 +1,22 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+<<<<<<< HEAD
 /* Page Content */
 .container{
   margin-top: 100px;
+=======
+/* header */
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+>>>>>>> 4f68db8f399fc3630a7db3eead90e944cf11f929
 }
 
 /* sidebar */
@@ -32,6 +45,17 @@ aside {
       margin-top: 0px;
     }
   }
+}
+
+.sidebar-left{
+  float:left;
+  width:50%;
+}
+
+/* images */
+.image-right{
+  float:right;
+  padding-right: 10%;
 }
 
 .gravatar {
@@ -68,4 +92,21 @@ input {
   .form-control {
     color: $state-danger-text;
   }
+}
+
+/* etc */
+.float-clear{
+  border-width:0px;
+              
+  width: 100%;
+  height: 1px;
+                  
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: -1px; /* hack to make browser think this has a height */
+                  
+  padding: 0px;
+
+  clear: both;
 }
