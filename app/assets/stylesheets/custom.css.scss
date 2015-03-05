@@ -29,6 +29,17 @@ aside {
   }
 }
 
+.sidebar-left{
+  float:left;
+  width:50%;
+}
+
+//images
+.image-right{
+  float:right;
+  padding-right: 10%;
+}
+
 .gravatar {
   float: left;
   margin-right: 10px;
@@ -63,4 +74,21 @@ input {
   .form-control {
     color: $state-danger-text;
   }
+}
+
+//etc
+.float-clear{
+  border-width:0px;
+              
+  width: 100%;
+  height: 1px;
+                  
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: -1px; /* hack to make browser think this has a height */
+                  
+  padding: 0px;
+
+  clear: both;
 }

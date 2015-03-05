@@ -22,6 +22,7 @@ class MoviesController < ApplicationController
 
 	def show
 		@movie = Movie.find(params[:id])
+		@summary = NetflixRoulette.get_media_summary(@movie.title)
 		gon.title = @movie.title
 	end
 

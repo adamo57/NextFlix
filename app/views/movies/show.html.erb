@@ -1,19 +1,26 @@
-<% provide(:title, 'Movie') %>
+<% provide(:title, @movie.title) %>
 
 <div class="container">
   <br/>
   <br/>
   <br/>
   <br/>
-  <h2> <%= @movie.title %> </h2>
-  <h3> <%= @movie.genre %> </h3>
-  <h3> Rating: <%= @movie.rating %> </h3>
-  <h3> Released in <%= @movie.release_year %> </h3>
-  <h4> <%= @movie.netflix_id %> </h4>
+  <div class="sidebar-left">
+    <h2> <%= @movie.title %> </h2>
+    <h3> <%= @movie.genre %> </h3>
+    <h3> Rating: <%= @movie.rating %> </h3>
+    <h3> Released in <%= @movie.release_year %> </h3>
+    <h4> <%= @movie.netflix_id %> </h4>
+    <h4> <%= @summary %> </h4>
 
-  <h2> <!--<%= @movie.attributes %> --> </h2>
+    <h2> <!--<%= @movie.attributes %> --> </h2>    
+  </div>
 
-<table id="eeTable" class="display" cellspacing="0" width="100%">
+  <img class="image-right" src=""/>
+
+  <div class="float-clear"></div>
+
+<table id="movieTable" class="display" cellspacing="0" width="100%">
 <thead>
   <tr>
     <th>Source Type</th>
@@ -25,12 +32,6 @@
 </tbody>      
 </table>
 </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <button id="load" class="btn btn-info">Get Data</button>
-    <button id="clear" class="btn btn-info">Clear Data</button>
-  </div>      
 </div>
 
 
@@ -48,15 +49,18 @@
       var base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq";
       var search_url = "/search/movie/title/"; //add title name to end
       var source_url = "/movie/"; //add id to end
+      var poster_suffix = "/images/posters"; // add to end of source_url, but id must be in between the two parts of the url
 
       $(document).ready(function() 
       {
-          $('#eeTable').dataTable( {
+          $('#movieTable').dataTable( {
             "searching": false,
               "paging":   false,
               "ordering": true,
               "info":     false
           } );
+          $('.image-right').hide();
+          ajaxQueue(0); 
       } );
 
       function ajaxQueue(step){
@@ -65,56 +69,62 @@
           //get sources for the movie
           case 1:
             url = base_url + source_url + id;
+            //alert(id);
             $.getJSON( url)
               .done(function( json ){
                 //For free on the net
                 sources = json.free_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  $('#eeTable').DataTable().row.add( ["Free", sources[i].display_name] ).draw();
+                  $('#movieTable').DataTable().row.add( ["Free", sources[i].display_name] ).draw();
                 }
 
                 //Pay for it on the net
                 sources = json.purchase_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  $('#eeTable').DataTable().row.add( ["Paid", sources[i].display_name] ).draw();
+                  $('#movieTable').DataTable().row.add( ["Paid", sources[i].display_name] ).draw();
                 }
 
                 //Need a subscription to view (i.e. Amazon Prime)
                 sources = json.subscription_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  $('#eeTable').DataTable().row.add( ["Subscription", sources[i].display_name] ).draw();
+                  $('#movieTable').DataTable().row.add( ["Subscription", sources[i].display_name] ).draw();
                 }
 
                 //Offline/On Demand (i.e. Xfinity)
                 sources = json.other_sources.tv_on_demand;
                 for(var i = 0; i < sources.length; i++){
-                  $('#eeTable').DataTable().row.add( ["On Demand", sources[i].display_name] ).draw();
+                  $('#movieTable').DataTable().row.add( ["On Demand", sources[i].display_name] ).draw();
                 }
+                ajaxQueue(2);
+              })
+          break;
+
+          case 2:
+            url = base_url + source_url + id + poster_suffix;
+            $.getJSON( url)
+              .done(function( json ){
+                //get poster
+                poster_url = json.results.posters[0].medium.url;
+                poster_url = poster_url.replace("\\", "");
+                //alert(poster_url);
+
+                $('.image-right').attr("src", poster_url);
+                $('.image-right').hide();
+                $('.image-right').delay(400).fadeIn(2000);
               })
           break;
 
           //get the id
           case 0:
             url = base_url + search_url + gon.title; 
+            //alert(url);
             $.getJSON( url)
               .done(function( json ) {
                 id = json.results[0].id;
                 ajaxQueue(1);
               })            
-            break;
+          break;
         }
       }
-
-      $('#load').click(function () 
-      {  
-           
-        ajaxQueue(0);       
-             
-      });
-
-      $('#clear').click(function () 
-      {
-        $('#eeTable').DataTable().clear().draw();
-      });
 
     </script>
