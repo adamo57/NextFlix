@@ -1,16 +1,11 @@
 <% provide(:title, @movie.title) %>
 
 <div class="container">
-  <br/>
-  <br/>
-  <br/>
-  <br/>
   <div class="sidebar-left">
     <h2> <%= @movie.title %> </h2>
     <h3> <%= @movie.genre %> </h3>
     <h3> Rating: <%= @movie.rating %> </h3>
     <h3> Released in <%= @movie.release_year %> </h3>
-    <h4> <%= @movie.netflix_id %> </h4>
     <h4> <%= @summary %> </h4>
 
     <h2> <!--<%= @movie.attributes %> --> </h2>    
@@ -19,12 +14,14 @@
   <img class="image-right" src=""/>
 
   <div class="float-clear"></div>
+  <hr/>
 
 <table id="movieTable" class="display" cellspacing="0" width="100%">
 <thead>
   <tr>
     <th>Source Type</th>
     <th>Source Name</th>
+    <th>Web Links</th>
   </tr>
 </thead>
 
@@ -75,25 +72,34 @@
                 //For free on the net
                 sources = json.free_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  $('#movieTable').DataTable().row.add( ["Free", sources[i].display_name] ).draw();
+                  link = sources[i].link;
+                  link = link.replace("\\", "");
+                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
+                  $('#movieTable').DataTable().row.add( ["Free", sources[i].display_name, link] ).draw();
                 }
 
                 //Pay for it on the net
                 sources = json.purchase_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  $('#movieTable').DataTable().row.add( ["Paid", sources[i].display_name] ).draw();
+                  link = sources[i].link;
+                  link = link.replace("\\", "");
+                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
+                  $('#movieTable').DataTable().row.add( ["Paid", sources[i].display_name, link] ).draw();
                 }
 
                 //Need a subscription to view (i.e. Amazon Prime)
                 sources = json.subscription_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  $('#movieTable').DataTable().row.add( ["Subscription", sources[i].display_name] ).draw();
+                  link = sources[i].link;
+                  link = link.replace("\\", "");
+                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
+                  $('#movieTable').DataTable().row.add( ["Subscription", sources[i].display_name, link] ).draw();
                 }
 
                 //Offline/On Demand (i.e. Xfinity)
                 sources = json.other_sources.tv_on_demand;
                 for(var i = 0; i < sources.length; i++){
-                  $('#movieTable').DataTable().row.add( ["On Demand", sources[i].display_name] ).draw();
+                  $('#movieTable').DataTable().row.add( ["On Demand", sources[i].display_name, ""] ).draw();
                 }
                 ajaxQueue(2);
               })
