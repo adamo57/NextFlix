@@ -26,9 +26,8 @@ class MoviesController < ApplicationController
 		gon.title = @movie.title
 	end
 
-	def randoMovie
-		@movie = Movie.find(Movie.order("random()").first(5))
-		render 'show'
+	def randomMovie
+		render :action=>'show', :id=>Random.rand(9000)
 	end
 	
 	private
