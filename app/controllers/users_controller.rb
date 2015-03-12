@@ -18,6 +18,10 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def friends
+		@user = User.find(params[:id])
+	end
+
 
 
 	private

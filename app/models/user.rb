@@ -1,4 +1,17 @@
 class User < ActiveRecord::Base
+    has_many :active_relationships, class_name:  "Friend",
+                                  foreign_key: "friend2_id",
+                                  dependent:   :destroy
+    has_many :passive_relationships, class_name:  "Friend",
+                                   foreign_key: "friend1_id",
+                                   dependent:   :destroy
+
+    has_many :friends, through: :active_relationships, source: :friend2
+    has_many :friendsOf, through: :passive_relationships, source: :friend1
+
+
+
+
 	attr_accessor :remember_token
     before_save{ self.email = email.downcase }
 	validates :name,  presence: true, length: { maximum: 50 }
@@ -29,5 +42,20 @@ class User < ActiveRecord::Base
   # Forgets a user.
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  # Friends a user.
+  def friend(other_user)
+    active_relationships.create(friend2_id: other_user.id)
+  end
+
+  # Unfriends a user.
+  def unfriend(other_user)
+    active_relationships.find_by(friend2_id: other_user.id).destroy
+  end
+
+  # Returns true if the current user is a friend of the other user.
+  def friends?(other_user)
+    friends.include?(other_user)
   end
 end
