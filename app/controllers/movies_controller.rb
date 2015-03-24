@@ -1,4 +1,6 @@
 class MoviesController < ApplicationController
+	#around_filter :catch_not_found
+
 	def new
 		@movie = Movie.new
 	end
@@ -27,13 +29,18 @@ class MoviesController < ApplicationController
 	end
 
 	def randomMovie
-		render :action=>'show', :id=>Random.rand(9000)
 	end
 	
 	private
 
 	    def movie_params
-	      params.require(:movie).permit(:title, :genre)
+	      params.require(:movie).permit(:title)
 	    end
 
+	    #def catch_not_found
+		#  yield
+		#rescue ActiveRecord::RecordNotFound
+		#	flash[:danger] = "Record Not Found"
+		#	redirect_to root_url
+		#end
 end
