@@ -1,6 +1,13 @@
-<% if @user.friends.any? %>
-    <h3>pluaralize <%= @user.microposts.count %>, "Friend"</h3>
-    <ol class="friends">
-      	<%= render @friends %>
-    </ol>
-<% end %>
+<% provide(:title, @user.name) %>
+<div class="row">
+	<div class="col-md-4">
+		<% if @user.friends.any? %>
+		    <h3><%= pluralize @friends.count, "Friend" %></h3>
+		    <%= @friends %>
+		    <ul class="friends">		    	
+		      	<%= render @friends %>
+		    </ul>
+		    <%= will_paginate @friends %>
+		<% end %>
+	</div>
+</div>

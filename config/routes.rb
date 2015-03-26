@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :movies
-  resources :relationships,       only: [:create, :destroy]
+  resources :friendships,       only: [:create, :destroy]
 
 
   # The priority is based upon order of creation: first created -> highest priority.

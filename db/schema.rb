@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312135750) do
+ActiveRecord::Schema.define(version: 20150325223020) do
 
-  create_table "friends", force: :cascade do |t|
-    t.integer  "friend1_id"
-    t.integer  "friend2_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "friend_id"
+    t.integer  "friendOf_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "friends", ["friend1_id", "friend2_id"], name: "index_friends_on_friend1_id_and_friend2_id", unique: true
-  add_index "friends", ["friend1_id"], name: "index_friends_on_friend1_id"
-  add_index "friends", ["friend2_id"], name: "index_friends_on_friend2_id"
+  add_index "friendships", ["friendOf_id"], name: "index_friendships_on_friendOf_id"
+  add_index "friendships", ["friend_id", "friendOf_id"], name: "index_friendships_on_friend_id_and_friendOf_id", unique: true
+  add_index "friendships", ["friend_id"], name: "index_friendships_on_friend_id"
 
   create_table "movies", force: :cascade do |t|
     t.string   "title"

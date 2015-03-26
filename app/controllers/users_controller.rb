@@ -20,6 +20,7 @@ class UsersController < ApplicationController
 
 	def friends
 		@user = User.find(params[:id])
+		@friends = @user.friends.paginate(page: params[:page])
 	end
 
 
