@@ -7,6 +7,8 @@
     <h3> Rating: <%= @movie.rating %> </h3>
     <h3> Released in <%= @movie.release_year %> </h3>
     <h4> <%= @summary %> </h4>
+    <%= render 'like_form' if logged_in? %>
+
 
     <h2> <!--<%= @movie.attributes %> --> </h2>    
   </div>

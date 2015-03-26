@@ -2,14 +2,13 @@ class User < ActiveRecord::Base
       has_many :friendships, class_name:  "Friendship",
                                   foreign_key: "friend_id",
                                   dependent:   :destroy
-      #has_many :passive_friendships, class_name:  "Friendship",
-       #                           foreign_key: "friendOf_id",
-        #                          dependent:   :destroy
+      has_many :user_movies, class_name:  "UserMovie",
+                                  foreign_key: "user_id",
+                                  dependent:   :destroy
+
 
       has_many :friends, through: :friendships, source: :friendOf
-      #has_many :friendsOf, through: :passive_relationships, source: :friend
-
-
+      has_many :movies, through: :user_movies, source: :movie
 
 
 	attr_accessor :remember_token
@@ -57,5 +56,20 @@ class User < ActiveRecord::Base
   # Returns true if the current user is a friend of the other user.
   def friends?(other_user)
     friends.include?(other_user)
+  end
+
+   # Likes a movie.
+  def like(movie)
+    user_movies.create(movie_id: movie.id)
+  end
+
+  # Unlike a movie.
+  def unlike(movie)
+    user_movies.find_by(movie_id: movie.id).destroy
+  end
+
+  # Returns true if the current user likes the movie
+  def likes?(movie)
+    movies.include?(movie) and movies.find_by(movie_id: movie.id).liked 
   end
 end
