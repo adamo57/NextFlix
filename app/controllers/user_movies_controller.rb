@@ -8,8 +8,8 @@ class UserMoviesController < ApplicationController
   end
 
   def destroy
-    #movie = UserMovie.find(params[:id]).movie
-    #current_user.unlike(movie)
-    #redirect_to movie
+    movie = UserMovie.find(params[:id]).movie
+    current_user.unlike(movie)
+    redirect_to movie
   end
 end
