@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
+		#sql to get liked movies by user
+		sql = "id IN (SELECT movie_id FROM user_movies where user_id = #{@user.id} AND liked = ?)"
+		@liked_movies = Movie.where(sql, true).paginate(page: params[:page])
 	end
 	def new
 		@user = User.new

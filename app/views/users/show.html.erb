@@ -14,4 +14,12 @@
       <%= render 'friend_form' if logged_in? %>
     </section>
   </aside>
+  
+  </section>
+    <h2> Liked Movies </h2>
+    <ul class="movies">
+      <%= render @liked_movies %>
+    </ul>
+    <%= will_paginate @liked_movies %>
+  <section>
 </div>

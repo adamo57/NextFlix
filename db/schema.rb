@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326140535) do
+ActiveRecord::Schema.define(version: 20150328001738) do
+
+  create_table "friend_requests", force: :cascade do |t|
+    t.integer  "requester_id"
+    t.integer  "requested_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "friend_requests", ["requested_id"], name: "index_friend_requests_on_requested_id"
+  add_index "friend_requests", ["requester_id", "requested_id"], name: "index_friend_requests_on_requester_id_and_requested_id", unique: true
+  add_index "friend_requests", ["requester_id"], name: "index_friend_requests_on_requester_id"
 
   create_table "friendships", force: :cascade do |t|
     t.integer  "friend_id"

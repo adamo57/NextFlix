@@ -60,7 +60,9 @@ class User < ActiveRecord::Base
 
    # Likes a movie.
   def like(movie)
-    user_movies.create(movie_id: movie.id)
+    movie = user_movies.create(movie_id: movie.id)
+    movie.liked = 1
+    movie.save
   end
 
   # Unlike a movie.
@@ -70,6 +72,6 @@ class User < ActiveRecord::Base
 
   # Returns true if the current user likes the movie
   def likes?(movie)
-    movies.include?(movie) and movies.find_by(movie_id: movie.id).liked 
+    movies.include?(movie) and user_movies.find_by(movie_id: movie.id).liked
   end
 end

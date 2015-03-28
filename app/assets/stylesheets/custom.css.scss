@@ -94,6 +94,12 @@ aside {
   list-style: none;
 }
 
+/* movies */
+.movies{
+  list-style: none;
+  a { color: inherit; } 
+}
+
 /* images */
 .image-right{
   float:right;
