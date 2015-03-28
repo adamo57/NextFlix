@@ -4,4 +4,8 @@ class Movie < ActiveRecord::Base
 	validates :genre, presence: true
 	validates :release_year, presence: true
 	validates :netflix_id, presence: true
+
+	def isOnNetflix?()
+		not genre == "Unable to locate data"
+	end
 end

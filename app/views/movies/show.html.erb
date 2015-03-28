@@ -2,11 +2,15 @@
 
 <div class="container">
   <div class="sidebar-left">
-    <h2> <%= @movie.title %> </h2>
-    <h3> <%= @movie.genre %> </h3>
-    <h3> Rating: <%= @movie.rating %> </h3>
-    <h3> Released in <%= @movie.release_year %> </h3>
-    <h4> <%= @summary %> </h4>
+    <% if @movie.isOnNetflix? %>
+      <h2> <%= @movie.title %> </h2>
+      <h3> <%= @movie.genre %> </h3>
+      <h3> Rating: <%= @movie.rating %> </h3>
+      <h3> Released in <%= @movie.release_year %> </h3>
+      <h4> <%= @summary %> </h4>
+    <% else %>
+      <h4> <%= @movie.title %> is not on NetFlix</h4>
+    <% end %>
     <%= render 'like_form' if logged_in? %>
 
 
