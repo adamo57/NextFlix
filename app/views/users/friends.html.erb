@@ -3,11 +3,16 @@
 	<div class="col-md-4">
 		<% if @user.friends.any? %>
 		    <h3><%= pluralize @friends.count, "Friend" %></h3>
-		    <%= @friends %>
+		    <%#= @friends %>
+		    <ul class="friends">		    	
+		      	<%= render @requests %>
+		    </ul>
+		    <%= will_paginate @requests %>
+
 		    <ul class="friends">		    	
 		      	<%= render @friends %>
 		    </ul>
-		    <%= will_paginate @friends %>
+		    <%= will_paginate @friends %>		    
 		<% end %>
 	</div>
 </div>

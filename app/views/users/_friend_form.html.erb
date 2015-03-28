@@ -1,9 +1,9 @@
 <% unless current_user?(@user) %>
   <div id="friend_form">
-  <% if current_user.friends?(@user) %>
-    <%= render 'unfriend' %>
-  <% else %>
+  <% if not current_user.friends?(@user) and not current_user.sent_request?(@user) %>
     <%= render 'friend' %>
+  <% elsif not current_user.friends?(@user) and current_user.sent_request?(@user) %>
+    <%= render 'unfriend' %>
   <% end %>
   </div>
 <% end %>

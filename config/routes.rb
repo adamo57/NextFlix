@@ -32,12 +32,19 @@ Rails.application.routes.draw do
       get :friends
     end
   end
+  #friend requests
+  resources :users do
+    member do
+      get :friendRequests
+    end
+  end
 
 
 
   resources :users
   resources :movies
-  resources :friendships,       only: [:create, :destroy]
+  resources :friendships,           only: [:create, :destroy]
+  resources :friend_requests,       only: [:create, :destroy]
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -2,14 +2,18 @@ class User < ActiveRecord::Base
       has_many :friendships, class_name:  "Friendship",
                                   foreign_key: "friend_id",
                                   dependent:   :destroy
-      #has_many :passive_friendships, class_name:  "Friendship",
-       #                           foreign_key: "friendOf_id",
-        #                          dependent:   :destroy
+      has_many :active_friend_requests, class_name:  "FriendRequest",
+                                  as: :requested,
+                                  foreign_key: "requester_id",
+                                  dependent:   :destroy
+      has_many :passive_friend_requests, class_name:  "FriendRequest",
+                                  foreign_key: "requested_id",
+                                  dependent:   :destroy
+
 
       has_many :friends, through: :friendships, source: :friendOf
-      #has_many :friendsOf, through: :passive_relationships, source: :friend
-
-
+      has_many :sent_requests, through: :active_friend_requests, source: :requester
+      has_many :pending_requests, through: :passive_friend_requests, source: :requested
 
 
 	attr_accessor :remember_token
@@ -58,4 +62,29 @@ class User < ActiveRecord::Base
   def friends?(other_user)
     friends.include?(other_user)
   end
+
+  #add a new sent friend
+  def addSentRequest(requested_user)
+    sent_requests.create(requested_id: requested_user.id)
+  end
+
+  #deletes a friend request
+  def removeRequest(requested_user)
+    sent_requests.find_by(requested_id: requested_user.id).destroy
+  end
+
+  #check if user has sent a friend request
+  def sent_request?(other_user)
+    sent_requests.include?(other_user)
+  end
+
+  #add a new pending friend request
+  def addPendingRequest(requesting_user)
+    pending_requests.create(requester_id: requesting_user.id)
+  end
+
+  #remove/reject a pending friend request
+  def removePendingRequest(requesting_user)
+    pending_requests.find_by(requester_id: requester_user.id).destroy
+  end  
 end
