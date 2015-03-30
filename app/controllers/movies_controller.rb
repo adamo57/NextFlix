@@ -8,12 +8,15 @@ class MoviesController < ApplicationController
 
 		@movie = Movie.new(movie_params)
 
-	    @movie.rating = NetflixRoulette.get_media_rating(@movie.title)
-	    @movie.release_year = NetflixRoulette.get_media_release_year(@movie.title)
-	    @movie.genre = NetflixRoulette.get_media_category(@movie.title)
-	    @movie.netflix_id = NetflixRoulette.get_netflix_id(@movie.title)
+	    @movie.rating = 5#NetflixRoulette.get_media_rating(@movie.title)
+	    @movie.release_year = 2015#NetflixRoulette.get_media_release_year(@movie.title)
+	    @movie.genre = "Best"#NetflixRoulette.get_media_category(@movie.title)
+	    @movie.netflix_id = 69#NetflixRoulette.get_netflix_id(@movie.title)
 	   
 	    if @movie.save
+	    	if current_user
+	    		current_user.mark_viewed(@movie)
+	    	end
 	    	redirect_to @movie
 	    else
 	    	render 'new'
@@ -22,7 +25,7 @@ class MoviesController < ApplicationController
 
 	def show
 		@movie = Movie.find(params[:id])
-		@summary = NetflixRoulette.get_media_summary(@movie.title)
+		@summary = "A Movie so good it broke the Netflix Ruolette site."#NetflixRoulette.get_media_summary(@movie.title)
 		gon.title = @movie.title
 	end
 

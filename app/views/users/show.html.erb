@@ -15,11 +15,22 @@
     </section>
   </aside>
   
-  </section>
+  <section class="col-md-3">
+    <% unless @liked_movies.empty? %>
     <h2> Liked Movies </h2>
     <ul class="movies">
       <%= render @liked_movies %>
     </ul>
     <%= will_paginate @liked_movies %>
-  <section>
+    <% end %>
+  </section>
+  <section class="col-md-3">
+    <% unless @viewed_movies.empty? %>
+    <h2> Recently Viewed </h2>
+    <ul class="movies">
+      <%= render @viewed_movies %>
+    </ul>
+    <%= will_paginate @viewed_movies %>
+    <% end %>
+  </section>
 </div>

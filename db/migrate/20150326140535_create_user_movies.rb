@@ -3,7 +3,7 @@ class CreateUserMovies < ActiveRecord::Migration
     create_table :user_movies do |t|
       t.integer :movie_id
       t.integer :user_id
-      t.boolean :recently_viewed
+      t.boolean :recently_viewed, :default => true
       t.boolean :liked
 
       t.timestamps null: false

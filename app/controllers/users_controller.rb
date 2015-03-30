@@ -4,6 +4,9 @@ class UsersController < ApplicationController
 		#sql to get liked movies by user
 		sql = "id IN (SELECT movie_id FROM user_movies where user_id = #{@user.id} AND liked = ?)"
 		@liked_movies = Movie.where(sql, true).paginate(page: params[:page])
+		#sql to get recently viewed movies by user
+		sql = "id IN (SELECT movie_id FROM user_movies where user_id = #{@user.id} AND recently_viewed = ?)"
+		@viewed_movies = Movie.where(sql, true).paginate(page: params[:page])
 	end
 	def new
 		@user = User.new
@@ -25,8 +28,6 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@friends = @user.friends.paginate(page: params[:page])
 	end
-
-
 
 	private
 

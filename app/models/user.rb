@@ -58,11 +58,27 @@ class User < ActiveRecord::Base
     friends.include?(other_user)
   end
 
+  #marks a movie as having been recently viewed
+  def mark_viewed(movie)
+    m = user_movies.find_by(movie_id: movie.id)
+    #if movie has not been created we create it on the next line.
+    if m == nil
+      m = user_movies.create(movie_id: movie.id)
+    end
+    m.recently_viewed = 1
+    m.save
+  end
+
    # Likes a movie.
   def like(movie)
-    movie = user_movies.create(movie_id: movie.id)
-    movie.liked = 1
-    movie.save
+    m = user_movies.find_by(movie_id: movie.id)
+    #if movie has not been created we create it on the next line.
+    if m == nil
+      m = user_movies.create(movie_id: movie.id)
+    end
+    m.liked = 1
+    m.recently_viewed = 1
+    m.save
   end
 
   # Unlike a movie.
