@@ -7,11 +7,16 @@ class MoviesController < ApplicationController
 		title = params[:title]
 
 		@movie = Movie.new(movie_params)
-
-	    @movie.rating = 5#NetflixRoulette.get_media_rating(@movie.title)
-	    @movie.release_year = 2015#NetflixRoulette.get_media_release_year(@movie.title)
-	    @movie.genre = "Best"#NetflixRoulette.get_media_category(@movie.title)
-	    @movie.netflix_id = 69#NetflixRoulette.get_netflix_id(@movie.title)
+		@@error_message = ""
+		begin
+		    @movie.rating = NetflixRoulette.get_media_rating(@movie.title)
+		    @movie.release_year = NetflixRoulette.get_media_release_year(@movie.title)
+		    @movie.genre = NetflixRoulette.get_media_category(@movie.title)
+		    @movie.netflix_id = NetflixRoulette.get_netflix_id(@movie.title)
+		    @@error_message = ""
+		rescue
+			@@error_message = "Could not connect to the NetflixRoulette API"
+		end
 	   
 	    if @movie.save
 	    	if current_user
@@ -27,6 +32,7 @@ class MoviesController < ApplicationController
 		@movie = Movie.find(params[:id])
 		@summary = "A Movie so good it broke the Netflix Ruolette site."#NetflixRoulette.get_media_summary(@movie.title)
 		gon.title = @movie.title
+		@error_message = @@error_message
 	end
 
 	def randoMovie
@@ -39,5 +45,4 @@ class MoviesController < ApplicationController
 	    def movie_params
 	      params.require(:movie).permit(:title, :genre)
 	    end
-
 end
