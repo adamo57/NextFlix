@@ -11,18 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328001738) do
-
-  create_table "friend_requests", force: :cascade do |t|
-    t.integer  "requester_id"
-    t.integer  "requested_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "friend_requests", ["requested_id"], name: "index_friend_requests_on_requested_id"
-  add_index "friend_requests", ["requester_id", "requested_id"], name: "index_friend_requests_on_requester_id_and_requested_id", unique: true
-  add_index "friend_requests", ["requester_id"], name: "index_friend_requests_on_requester_id"
+ActiveRecord::Schema.define(version: 20150325223020) do
 
   create_table "friendships", force: :cascade do |t|
     t.integer  "friend_id"
@@ -48,13 +37,15 @@ ActiveRecord::Schema.define(version: 20150328001738) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "pending_friend_requests_id"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",           default: false
+    t.boolean  "admin",                      default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["pending_friend_requests_id"], name: "index_users_on_pending_friend_requests_id"
 
 end

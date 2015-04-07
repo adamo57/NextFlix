@@ -2,18 +2,8 @@ class User < ActiveRecord::Base
       has_many :friendships, class_name:  "Friendship",
                                   foreign_key: "friend_id",
                                   dependent:   :destroy
-      has_many :active_friend_requests, class_name:  "FriendRequest",
-                                  as: :requested,
-                                  foreign_key: "requester_id",
-                                  dependent:   :destroy
-      has_many :passive_friend_requests, class_name:  "FriendRequest",
-                                  foreign_key: "requested_id",
-                                  dependent:   :destroy
-
 
       has_many :friends, through: :friendships, source: :friendOf
-      has_many :sent_requests, through: :active_friend_requests, source: :requester
-      has_many :pending_requests, through: :passive_friend_requests, source: :requested
 
 
 	attr_accessor :remember_token
@@ -22,7 +12,7 @@ class User < ActiveRecord::Base
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensiive: false }
+                    uniqueness: { case_senstive: false }
     has_secure_password   
     validates :password, length: { minimum: 6 }  
 
@@ -63,28 +53,18 @@ class User < ActiveRecord::Base
     friends.include?(other_user)
   end
 
-  #add a new sent friend
+ """ #add a new sent friend
   def addSentRequest(requested_user)
-    sent_requests.create(requested_id: requested_user.id)
+    friend_requests.create(requested_id: requested_user.id)
   end
 
   #deletes a friend request
   def removeRequest(requested_user)
-    sent_requests.find_by(requested_id: requested_user.id).destroy
+    friend_requests.find_by(requested_id: requested_user.id).destroy
   end
 
   #check if user has sent a friend request
   def sent_request?(other_user)
-    sent_requests.include?(other_user)
-  end
-
-  #add a new pending friend request
-  def addPendingRequest(requesting_user)
-    pending_requests.create(requester_id: requesting_user.id)
-  end
-
-  #remove/reject a pending friend request
-  def removePendingRequest(requesting_user)
-    pending_requests.find_by(requester_id: requester_user.id).destroy
-  end  
+    friend_requests.include?(other_user)
+  end  """
 end
