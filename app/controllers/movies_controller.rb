@@ -29,6 +29,17 @@ class MoviesController < ApplicationController
 	end
 
 	def randomMovie
+		id = Random.rand(9000)
+
+	     base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq"
+    	 source_url = "/movie/"
+
+    	 url = base_url+source_url+50362.to_s
+    	 hash =JSON.parse(url)
+
+    	 params[:title] = hash['title']
+
+    	 render 'create'
 	end
 	
 	private
