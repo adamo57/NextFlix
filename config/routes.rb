@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-
   get 'users/new'
 
   root               'static_pages#home'
@@ -21,30 +19,8 @@ Rails.application.routes.draw do
 
   post 'randoMovie'  => 'movies#randoMovie'
 
-  #sessions
-  get    'login'   => 'sessions#new'
-  post   'login'   => 'sessions#create'
-  delete 'logout'  => 'sessions#destroy'
-
-  #friends
-  resources :users do
-    member do
-      get :friends
-    end
-  end
-  #movies
-  resources :users do
-    member do
-      get :movies
-    end
-  end
-
-
-
   resources :users
   resources :movies
-  resources :friendships,       only: [:create, :destroy]
-  resources :user_movies,       only: [:create, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

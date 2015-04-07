@@ -11,18 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326140535) do
-
-  create_table "friendships", force: :cascade do |t|
-    t.integer  "friend_id"
-    t.integer  "friendOf_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "friendships", ["friendOf_id"], name: "index_friendships_on_friendOf_id"
-  add_index "friendships", ["friend_id", "friendOf_id"], name: "index_friendships_on_friend_id_and_friendOf_id", unique: true
-  add_index "friendships", ["friend_id"], name: "index_friendships_on_friend_id"
+ActiveRecord::Schema.define(version: 20150220005437) do
 
   create_table "movies", force: :cascade do |t|
     t.string   "title"
@@ -34,27 +23,12 @@ ActiveRecord::Schema.define(version: 20150326140535) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "user_movies", force: :cascade do |t|
-    t.integer  "movie_id"
-    t.integer  "user_id"
-    t.boolean  "recently_viewed", default: true
-    t.boolean  "liked"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
-
-  add_index "user_movies", ["movie_id"], name: "index_user_movies_on_movie_id"
-  add_index "user_movies", ["user_id", "movie_id"], name: "index_user_movies_on_user_id_and_movie_id", unique: true
-  add_index "user_movies", ["user_id"], name: "index_user_movies_on_user_id"
-
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "password_digest"
-    t.string   "remember_digest"
-    t.boolean  "admin",           default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

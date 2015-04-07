@@ -1,20 +1,17 @@
 <% provide(:title, @movie.title) %>
 
 <div class="container">
+  <br/>
+  <br/>
+  <br/>
+  <br/>
   <div class="sidebar-left">
-    <% if !@error_message.empty? %>
-      <h2> <%= @error_message %>
-
-    <% elsif @movie.isOnNetflix? %>
-      <h2> <%= @movie.title %> </h2>
-      <h3> <%= @movie.genre %> </h3>
-      <h3> Rating: <%= @movie.rating %> </h3>
-      <h3> Released in <%= @movie.release_year %> </h3>
-    <% else %>
-      <h4> <%= @movie.title %> is not on NetFlix</h4>
-    <% end %>
-    <%= render 'like_form' if logged_in? %>
-
+    <h2> <%= @movie.title %> </h2>
+    <h3> <%= @movie.genre %> </h3>
+    <h3> Rating: <%= @movie.rating %> </h3>
+    <h3> Released in <%= @movie.release_year %> </h3>
+    <h4> <%= @movie.netflix_id %> </h4>
+    <h4> <%= @summary %> </h4>
 
     <h2> <!--<%= @movie.attributes %> --> </h2>    
   </div>
@@ -22,14 +19,12 @@
   <img class="image-right" src=""/>
 
   <div class="float-clear"></div>
-  <hr/>
 
 <table id="movieTable" class="display" cellspacing="0" width="100%">
 <thead>
   <tr>
     <th>Source Type</th>
     <th>Source Name</th>
-    <th>Web Links</th>
   </tr>
 </thead>
 
@@ -49,10 +44,9 @@
     
     <!-- custom local javascript -->
     <script>
-      //old id: rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq 
       var id;
       var url = "";
-      var base_url = "http://api-public.guidebox.com/v1.43/US/rKHTbTTX4EFgYoeZHa1fNpAqtTQY4IGm"; 
+      var base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq";
       var search_url = "/search/movie/title/"; //add title name to end
       var source_url = "/movie/"; //add id to end
       var poster_suffix = "/images/posters"; // add to end of source_url, but id must be in between the two parts of the url
@@ -81,34 +75,25 @@
                 //For free on the net
                 sources = json.free_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  link = sources[i].link;
-                  link = link.replace("\\", "");
-                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
-                  $('#movieTable').DataTable().row.add( ["Free", sources[i].display_name, link] ).draw();
+                  $('#movieTable').DataTable().row.add( ["Free", sources[i].display_name] ).draw();
                 }
 
                 //Pay for it on the net
                 sources = json.purchase_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  link = sources[i].link;
-                  link = link.replace("\\", "");
-                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
-                  $('#movieTable').DataTable().row.add( ["Paid", sources[i].display_name, link] ).draw();
+                  $('#movieTable').DataTable().row.add( ["Paid", sources[i].display_name] ).draw();
                 }
 
                 //Need a subscription to view (i.e. Amazon Prime)
                 sources = json.subscription_web_sources;
                 for(var i = 0; i < sources.length; i++){
-                  link = sources[i].link;
-                  link = link.replace("\\", "");
-                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
-                  $('#movieTable').DataTable().row.add( ["Subscription", sources[i].display_name, link] ).draw();
+                  $('#movieTable').DataTable().row.add( ["Subscription", sources[i].display_name] ).draw();
                 }
 
                 //Offline/On Demand (i.e. Xfinity)
                 sources = json.other_sources.tv_on_demand;
                 for(var i = 0; i < sources.length; i++){
-                  $('#movieTable').DataTable().row.add( ["On Demand", sources[i].display_name, ""] ).draw();
+                  $('#movieTable').DataTable().row.add( ["On Demand", sources[i].display_name] ).draw();
                 }
                 ajaxQueue(2);
               })
