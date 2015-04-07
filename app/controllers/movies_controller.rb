@@ -31,15 +31,26 @@ class MoviesController < ApplicationController
 	def randomMovie
 		id = Random.rand(9000)
 
-	     base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq"
-    	 source_url = "/movie/"
+	    base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq"
+		source_url = "/movie/"
 
-    	 url = base_url+source_url+50362.to_s
-    	 hash =JSON.parse(url)
+		url = base_url + source_url + id.to_s
 
-    	 params[:title] = hash['title']
+		response = HTTParty.get(url)
+		hash = JSON.parse(response.body)
 
-    	 render 'create'
+		title = hash['title']		
+
+		@movie = Movie.new(title: title)
+
+	    @movie.rating = NetflixRoulette.get_media_rating(@movie.title)
+	    @movie.release_year = NetflixRoulette.get_media_release_year(@movie.title)
+	    @movie.genre = NetflixRoulette.get_media_category(@movie.title)
+	    @movie.netflix_id = NetflixRoulette.get_netflix_id(@movie.title)
+	   
+	    if @movie.save
+	    	redirect_to @movie
+	    end
 	end
 	
 	private

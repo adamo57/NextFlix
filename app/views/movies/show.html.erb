@@ -75,24 +75,36 @@
                 //For free on the net
                 sources = json.free_web_sources;
                 for(var i = 0; i < sources.length; i++){
+                  link = sources[i].link;
+                  link = link.replace("\\", "");
+                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
                   $('#movieTable').DataTable().row.add( ["Free", sources[i].display_name] ).draw();
                 }
 
                 //Pay for it on the net
                 sources = json.purchase_web_sources;
                 for(var i = 0; i < sources.length; i++){
+                  link = sources[i].link;
+                  link = link.replace("\\", "");
+                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
                   $('#movieTable').DataTable().row.add( ["Paid", sources[i].display_name] ).draw();
                 }
 
                 //Need a subscription to view (i.e. Amazon Prime)
                 sources = json.subscription_web_sources;
                 for(var i = 0; i < sources.length; i++){
+                  link = sources[i].link;
+                  link = link.replace("\\", "");
+                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
                   $('#movieTable').DataTable().row.add( ["Subscription", sources[i].display_name] ).draw();
                 }
 
                 //Offline/On Demand (i.e. Xfinity)
                 sources = json.other_sources.tv_on_demand;
                 for(var i = 0; i < sources.length; i++){
+                  link = sources[i].link;
+                  link = link.replace("\\", "");
+                  link = "<a href=" + link + ">" + sources[i].display_name + "</a>";
                   $('#movieTable').DataTable().row.add( ["On Demand", sources[i].display_name] ).draw();
                 }
                 ajaxQueue(2);
