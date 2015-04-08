@@ -20,8 +20,9 @@ class UsersController < ApplicationController
 	def friends
 		@user = User.find(params[:id])
 		@friends = @user.friends.paginate(page: params[:page])
-		#@requests = @user.pending_friend_requests.select{|friend| friend.requested_id == @user.id}
-		#@requests = @requests.paginate(page: params[:page])
+
+		sql = "requested_id = ?"
+		@requests = FriendRequest.where(sql, @user.id).paginate(page: params[:page])
 	end
 
 

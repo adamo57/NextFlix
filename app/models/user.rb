@@ -5,6 +5,11 @@ class User < ActiveRecord::Base
 
       has_many :friends, through: :friendships, source: :friendOf
 
+      has_many :friend_requests, class_name: "FriendRequest", foreign_key: "requester_id", dependent: :destroy
+      has_many :sent_requests, through: :friend_requests, source: :requester
+
+      has_many :pending_requests, through: :friend_requests, source: :requested
+
 
 	attr_accessor :remember_token
   before_save{ self.email = email.downcase }
@@ -53,7 +58,7 @@ class User < ActiveRecord::Base
     friends.include?(other_user)
   end
 
- """ #add a new sent friend
+  #add a new sent friend
   def addSentRequest(requested_user)
     friend_requests.create(requested_id: requested_user.id)
   end
@@ -66,5 +71,5 @@ class User < ActiveRecord::Base
   #check if user has sent a friend request
   def sent_request?(other_user)
     friend_requests.include?(other_user)
-  end  """
+  end
 end
