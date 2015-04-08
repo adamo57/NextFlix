@@ -8,7 +8,7 @@ class FriendRequestsController < ApplicationController
   end
 
   def destroy
-    user = FriendRequests.find(params[:id]).followed
+    user = FriendRequest.find(params[:id]).requested
     current_user.removeRequest(user)
     redirect_to user
   end

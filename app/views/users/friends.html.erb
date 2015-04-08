@@ -11,10 +11,8 @@
 		<% end %>
 
 		<% if @user.friends.any? %>
-			<hr/>
 		    <h3><%= pluralize @friends.count, "Friend" %></h3>
 		    <hr/>
-		    <%#= @friends %>
 		    <ul class="friends">		    	
 		      	<%= render @friends %>
 		    </ul>

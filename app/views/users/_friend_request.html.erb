@@ -1,4 +1,6 @@
 <li>
-  <%= gravatar_for User.find_by(request.id), size: 50 %>
-  <%= link_to User.find_by(request.id).name, user %>
+  <%= user = User.find_by(requested.id)
+  <%= gravatar_for user, size: 50 %>
+  <%= link_to user.name, user %>
+  <%= render 'request_form' %>
 </li>

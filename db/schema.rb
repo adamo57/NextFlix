@@ -45,31 +45,16 @@ ActiveRecord::Schema.define(version: 20150408012929) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "user_movies", force: :cascade do |t|
-    t.integer  "movie_id"
-    t.integer  "user_id"
-    t.boolean  "recently_viewed", default: true
-    t.boolean  "liked"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
-
-  add_index "user_movies", ["movie_id"], name: "index_user_movies_on_movie_id"
-  add_index "user_movies", ["user_id", "movie_id"], name: "index_user_movies_on_user_id_and_movie_id", unique: true
-  add_index "user_movies", ["user_id"], name: "index_user_movies_on_user_id"
-
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.integer  "pending_friend_requests_id"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",                      default: false
+    t.boolean  "admin",           default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["pending_friend_requests_id"], name: "index_users_on_pending_friend_requests_id"
 
 end
