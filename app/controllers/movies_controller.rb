@@ -29,6 +29,7 @@ class MoviesController < ApplicationController
 	end
 
 	def randomMovie
+<<<<<<< HEAD
 		id = Random.rand(9000)
 
 	    base_url = "http://api-public.guidebox.com/v1.43/US/rKaihTUA2eO9IoFec4f2jvFrKwdJxxhq"
@@ -51,6 +52,8 @@ class MoviesController < ApplicationController
 	    if @movie.save
 	    	redirect_to @movie
 	    end
+=======
+>>>>>>> finishRando
 	end
 	
 	private
