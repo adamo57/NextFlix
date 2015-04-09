@@ -1,4 +1,3 @@
-<p> <%= current_user?(@user) %> </p>
 <% unless current_user?(@user) %>
   <div id="friend_form">
     <%= render 'accept_friend_request' %>
