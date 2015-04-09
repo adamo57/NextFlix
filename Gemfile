@@ -4,6 +4,7 @@ gem 'rails',                '4.2.0'
 gem 'bcrypt',               '3.1.7'
 gem "netflix_roulette"
 gem 'gon'
+gem 'httparty'
 gem 'faker',                '1.4.2'
 gem 'whenever', :require => false
 gem 'will_paginate',           '3.0.7'

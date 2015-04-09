@@ -30,7 +30,7 @@ class MoviesController < ApplicationController
 
 	def show
 		@movie = Movie.find(params[:id])
-		@summary = "A Movie so good it broke the Netflix Ruolette site."#NetflixRoulette.get_media_summary(@movie.title)
+		@summary = NetflixRoulette.get_media_summary(@movie.title)
 		gon.title = @movie.title
 		@error_message = @@error_message
 	end
@@ -43,6 +43,6 @@ class MoviesController < ApplicationController
 	private
 
 	    def movie_params
-	      params.require(:movie).permit(:title, :genre)
+	      params.require(:movie).permit(:title, :genre, :image_url)
 	    end
 end
