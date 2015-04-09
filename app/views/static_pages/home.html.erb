@@ -16,19 +16,19 @@
           <div class="carousel-inner">
             <div class="item active">
               <img src="http://placehold.it/1200x315" alt="...">
-              <div class="carousel-caption">
+              <div class="text-center">
                   <h3>Caption Text</h3>
               </div>
             </div>
             <div class="item">
               <img src="http://placehold.it/1200x315" alt="...">
-              <div class="carousel-caption">
+              <div class="text-center">
                   <h3>Caption Text</h3>
               </div>
             </div>
             <div class="item">
               <img src="http://placehold.it/1200x315" alt="...">
-              <div class="carousel-caption">
+              <div class="text-center">
                   <h3>Caption Text</h3>
               </div>
             </div>
@@ -58,9 +58,9 @@
           <% counter = 0 %>          
           <% @popular.each do |movie|%>
             <% status = counter == 0 ? "\"item active\"" : "\"item\"" %>
-            <div class= <%= status.html_safe %>  >
-              <%= image_tag movie.image_url, alt: movie.title %>
-              <div class="carousel-caption">
+            <div class= <%= status.html_safe %> >
+              <%= image_tag( movie.image_url, alt: movie.title) %>
+              <div class="text-center">
                   <h3><%= movie.title %></h3>
               </div>
             </div>
