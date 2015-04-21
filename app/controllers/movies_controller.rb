@@ -8,18 +8,34 @@ class MoviesController < ApplicationController
 	def create
 		title = params[:title]
 
-		@movie = Movie.new(movie_params)
+		@movie = Movie.find_by(title: title)
 
-	    @movie.rating = NetflixRoulette.get_media_rating(@movie.title)
-	    @movie.release_year = NetflixRoulette.get_media_release_year(@movie.title)
-	    @movie.genre = NetflixRoulette.get_media_category(@movie.title)
-	    @movie.netflix_id = NetflixRoulette.get_netflix_id(@movie.title)
+		if @movie == nil
+			@movie = Movie.new(movie_params)
+			@@error_message = ""
+			begin
+			    @movie.rating = NetflixRoulette.get_media_rating(@movie.title)
+			    @movie.release_year = NetflixRoulette.get_media_release_year(@movie.title)
+			    @movie.genre = NetflixRoulette.get_media_category(@movie.title)
+			    @movie.netflix_id = NetflixRoulette.get_netflix_id(@movie.title)
+			    @@error_message = ""
+			rescue
+				@@error_message = "Could not connect to the NetflixRoulette API"
+			end
 	   
-	    if @movie.save
-	    	redirect_to @movie
-	    else
-	    	render 'new'
-	    end
+		    if @movie.save
+		    	if current_user
+		    		current_user.mark_viewed(@movie)
+		    	end
+		    	redirect_to @movie
+		    else
+		    	render 'new'
+		    end
+		else#movie already exists in database
+			if current_user
+		    	current_user.mark_viewed(@movie)
+			redirect_to @movie
+		end
 	end
 
 	def show
@@ -56,7 +72,11 @@ class MoviesController < ApplicationController
 	private
 
 	    def movie_params
+<<<<<<< HEAD
 	      params.require(:movie).permit(:title)
+=======
+	      params.require(:movie).permit(:title, :genre, :image_url)
+>>>>>>> movies
 	    end
 
 	    #def catch_not_found

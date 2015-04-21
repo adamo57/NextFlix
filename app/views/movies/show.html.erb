@@ -6,12 +6,20 @@
   <br/>
   <br/>
   <div class="sidebar-left">
-    <h2> <%= @movie.title %> </h2>
-    <h3> <%= @movie.genre %> </h3>
-    <h3> Rating: <%= @movie.rating %> </h3>
-    <h3> Released in <%= @movie.release_year %> </h3>
-    <h4> <%= @movie.netflix_id %> </h4>
-    <h4> <%= @summary %> </h4>
+
+    <% if !@error_message.empty? %>
+      <h2> <%= @error_message %>
+
+    <% elsif @movie.isOnNetflix? %>
+      <h2> <%= @movie.title %> </h2>
+      <h3> <%= @movie.genre %> </h3>
+      <h3> Rating: <%= @movie.rating %> </h3>
+      <h3> Released in <%= @movie.release_year %> </h3>
+      <h3> <%= @summary %> </h3>
+      <%= render 'like_form' if logged_in? %>
+    <% else %>
+      <h4> <%= @movie.title %> is not on NetFlix</h4>
+    <% end %>
 
     <h2> <!--<%= @movie.attributes %> --> </h2>    
   </div>
