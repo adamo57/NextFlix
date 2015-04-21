@@ -72,11 +72,7 @@ class MoviesController < ApplicationController
 	private
 
 	    def movie_params
-<<<<<<< HEAD
-	      params.require(:movie).permit(:title)
-=======
 	      params.require(:movie).permit(:title, :genre, :image_url)
->>>>>>> movies
 	    end
 
 	    #def catch_not_found
