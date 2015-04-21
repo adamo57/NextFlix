@@ -34,6 +34,7 @@ class MoviesController < ApplicationController
 		else#movie already exists in database
 			if current_user
 		    	current_user.mark_viewed(@movie)
+		    end
 			redirect_to @movie
 		end
 	end

@@ -51,6 +51,11 @@ h1{
   font-weight: bold;
 }
 
+/*spacing*/
+.push{
+  height:100px;
+}
+
 /*Footer*/
 .footer{
   background-color:rgba(255,255,255,0.25);
@@ -59,6 +64,12 @@ h1{
 /* caresoul */
 div.carousel-inner img{
     margin: 0 auto;
+}
+
+#popular{
+  width:200px;
+  margin-left: 450px;
+  height:200px;
 }
 
 /* sidebar */
