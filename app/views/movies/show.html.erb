@@ -7,10 +7,10 @@
   <br/>
   <div class="sidebar-left">
 
-    <% if !@@error_message.empty? %>
-      <h2> <%= @@error_message %>
+    <%# if !@@error_message.empty? %>
+      <h2> <%#= @@error_message %> </h2>
 
-    <% elsif @movie.isOnNetflix? %>
+    <% if @movie.isOnNetflix? %>
       <h2> <%= @movie.title %> </h2>
       <h3> <%= @movie.genre %> </h3>
       <h3> Rating: <%= @movie.rating %> </h3>

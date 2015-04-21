@@ -8,13 +8,21 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save
-		  # Handle a successful save
+	        
 			flash[:success] = "Welcome to the NextFlix!"
 			redirect_to @user
 
 		else
 		  render 'new'
 		end
+	end
+
+	def friends
+		@user = User.find(params[:id])
+		@friends = @user.friends.paginate(page: params[:page])
+
+		sql = "requested_id = ?"
+		@requests = FriendRequest.where(sql, @user.id).paginate(page: params[:page])
 	end
 
 	private

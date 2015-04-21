@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20150408012929) do
     t.string   "release_year"
     t.string   "genre"
     t.integer  "netflix_id"
+    t.string   "image_url"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
@@ -61,15 +62,13 @@ ActiveRecord::Schema.define(version: 20150408012929) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.integer  "pending_friend_requests_id"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",                      default: false
+    t.boolean  "admin",           default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["pending_friend_requests_id"], name: "index_users_on_pending_friend_requests_id"
 
 end

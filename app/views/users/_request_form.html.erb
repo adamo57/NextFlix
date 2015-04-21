@@ -1,0 +1,6 @@
+<% unless current_user?(@user) %>
+  <div id="friend_form">
+    <%= render 'accept_friend_request' %>
+    <%= render 'deny_friend_request' %>
+  </div>
+<% end %>
