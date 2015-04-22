@@ -6,16 +6,15 @@ class User < ActiveRecord::Base
                                   foreign_key: "user_id",
                                   dependent:   :destroy
 
-
       has_many :friends, through: :friendships, source: :friendOf
       has_many :movies, through: :user_movies, source: :movie
 
 
-	attr_accessor :remember_token
+  attr_accessor :remember_token
   before_save{ self.email = email.downcase }
-	validates :name,  presence: true, length: { maximum: 50 }
-	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-	validates :email, presence: true, length: { maximum: 255 },
+  validates :name,  presence: true, length: { maximum: 50 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensiive: false }
     has_secure_password   
@@ -34,7 +33,7 @@ class User < ActiveRecord::Base
 
    # Returns true if the given token matches the digest.
   def authenticated?(remember_token)
-  	return false if remember_digest.nil?
+    return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 

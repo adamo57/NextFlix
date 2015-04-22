@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+
   get 'users/new'
 
   root               'static_pages#home'
 
   get 'about'     => 'static_pages#about'
+
+  get 'recommend' => 'movies#recommend'
 
   get'randomMovie'=> 'movies#randomMovie'
 
@@ -15,10 +19,7 @@ Rails.application.routes.draw do
 
   get 'movies/show'
 
-  post 'randomMovie'  => 'movies#randomMovie'
-
-  resources :users
-  resources :movies
+  post 'randoMovie'  => 'movies#randoMovie'
 
   #sessions
   get    'login'   => 'sessions#new'
@@ -31,19 +32,18 @@ Rails.application.routes.draw do
       get :friends
     end
   end
-  #friend requests
+  #movies
   resources :users do
     member do
-      get :friendRequests
+      get :movies
     end
   end
 
 
-
   resources :users
   resources :movies
-  resources :friendships,           only: [:create, :destroy]
-  resources :friend_requests,       only: [:create, :destroy]
+  resources :friendships,       only: [:create, :destroy]
+  resources :user_movies,       only: [:create, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
