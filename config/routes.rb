@@ -9,8 +9,7 @@ Rails.application.routes.draw do
 
   get 'signup'  => 'users#new'
 
-  get 'movies/new' => 'movies#new
-  '
+  get 'movies/new' => 'movies#new'
   get 'isiton'    => 'movies#isIton'  
 
   get 'movies/show'
