@@ -7,5 +7,30 @@
         <%= @user.name %>
       </h1>
     </section>
+    <section class="stats">
+   	  <%= render 'shared/stats' %>
+    </section>
+    <section>
+      <%= render 'friend_form' if logged_in? %>
+    </section>
   </aside>
+  
+  <section class="col-md-3">
+    <% unless @liked_movies.empty? %>
+    <h2> Liked Movies </h2>
+    <ul class="movies">
+      <%= render @liked_movies %>
+    </ul>
+    <%= will_paginate @liked_movies %>
+    <% end %>
+  </section>
+  <section class="col-md-3">
+    <% unless @viewed_movies.empty? %>
+    <h2> Recently Viewed </h2>
+    <ul class="movies">
+      <%= render @viewed_movies %>
+    </ul>
+    <%= will_paginate @viewed_movies %>
+    <% end %>
+  </section>
 </div>

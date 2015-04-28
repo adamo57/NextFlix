@@ -1,13 +1,22 @@
 <% provide(:title, @user.name) %>
 <div class="row">
 	<div class="col-md-4">
+		<% #if @requests.any? %>
+		    <!--<h3><%#= pluralize @requests.count, "Request" %></h3>
+		    <hr/>
+			<ul class="friends">		    	
+			    <%#= render @requests %>
+			</ul>
+			<%#= will_paginate @requests %>-->
+		<% #end %>
+
 		<% if @user.friends.any? %>
 		    <h3><%= pluralize @friends.count, "Friend" %></h3>
-		    <%= @friends %>
+		    <hr/>
 		    <ul class="friends">		    	
 		      	<%= render @friends %>
 		    </ul>
-		    <%= will_paginate @friends %>
+		    <%= will_paginate @friends %>		    
 		<% end %>
 	</div>
 </div>

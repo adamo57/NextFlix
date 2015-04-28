@@ -5,6 +5,9 @@ class FriendshipsController < ApplicationController
     user = User.find(params[:friend_id])
     current_user.friend(user)
     user.friend(current_user)
+
+    #FriendRequest.find_by(requester_id: user.id, requested_id: current_user.id).destroy
+
     redirect_to user
   end
 
